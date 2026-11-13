@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Stash: every link worth keeping
 
-## Getting Started
+A polished, animated link library for videos, docs, articles and anything else on the web.
+Built with Next.js 16, Tailwind CSS 4, Motion and Supabase (auth, Postgres and realtime sync).
 
-First, run the development server:
+## Features
+
+- **Paste to save.** Paste a link anywhere on the page (Ctrl/⌘ V) or press **N**. Title, thumbnail, site icon and type (video, doc, article, image or other) are fetched automatically.
+- **Collections, tags, favorites, notes** and a **watched/read** checkmark.
+- **Instant search** across titles, URLs, notes, tags and sites (press **Ctrl/⌘ K** or **/**). Sort by date, title or website. Grid or list view.
+- **Cloud sync with accounts.** Email + password, magic links and optional Google sign-in. Changes appear live on your other devices.
+- **Import/export.** Import a JSON export or a browser bookmarks `.html` file from Chrome, Safari, Firefox or Edge.
+- **Works on any device.** Mobile-first layout, a swipe-to-close drawer, draggable bottom sheets and a floating add button. It respects safe areas and reduced-motion settings.
+- **Demo mode.** Without Supabase keys, everything still works and links are stored in the browser.
+
+## Run it locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. Without keys, the app runs in **demo mode**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Turn on accounts and cloud sync (Supabase, free tier is fine)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Create a project at https://supabase.com.
+2. In **SQL Editor**, paste the contents of [`supabase/schema.sql`](supabase/schema.sql) and click **Run**.
+   This creates the tables, Row Level Security policies (each user only sees their own links) and realtime.
+3. Copy `.env.local.example` to `.env.local` and fill in the values from **Project Settings → API**:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+   ```
+4. In **Authentication → URL Configuration**, set **Site URL** to your domain and add
+   `http://localhost:3000/auth/callback` and `https://your-domain.com/auth/callback` to **Redirect URLs**.
+5. *(Optional)* Google sign-in: enable the Google provider in **Authentication → Providers**, then set
+   `NEXT_PUBLIC_AUTH_GOOGLE=true`.
+6. Restart `npm run dev`.
 
-## Learn More
+## Deploy
 
-To learn more about Next.js, take a look at the following resources:
+Deploy to Vercel (or any Node host): import the repo, add the same environment variables, and deploy.
+Then add the production `/auth/callback` URL in Supabase (step 4).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project layout
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/app/                 routes: landing (/), /login, /app, /auth/callback, /api/preview
+src/components/landing/  hero, paste demo, features bento, device mockups
+src/components/library/  library screen, cards, add/edit form, sidebar, menus
+src/components/ui/       dialog/bottom sheet, menu, toast, button, cover art, logo
+src/lib/store/           storage backends: Supabase (cloud) and localStorage (demo)
+src/proxy.ts             refreshes the Supabase session and guards /app
+supabase/schema.sql      database schema + RLS policies
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The link-preview endpoint (`/api/preview`) only fetches public addresses. It refuses private and internal networks,
+caps the response size and times out. When accounts are enabled, it requires a signed-in user.
