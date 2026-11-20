@@ -1,7 +1,7 @@
-import { lookup } from "node:dns/promises";
-import { isIP } from "node:net";
 import { NextResponse, type NextRequest } from "next/server";
+import { Agent, fetch as undiciFetch, type Response as UndiciResponse } from "undici";
 import { isSupabaseConfigured } from "@/lib/config";
+import { assertSafeUrl, createSafeLookup } from "@/lib/ssrf";
 import { createSupabaseServer } from "@/lib/supabase/server";
 import { detectType, getYouTubeId, normalizeUrl } from "@/lib/url";
 import type { LinkPreview, LinkType } from "@/lib/types";
@@ -11,45 +11,31 @@ const MAX_BYTES = 768 * 1024;
 const MAX_REDIRECTS = 4;
 const UA = "Mozilla/5.0 (compatible; StashPreviewBot/1.0; +link-preview)";
 
-/* ---------- SSRF guard: refuse anything that resolves to a private network ---------- */
+/* ---------- SSRF guard (rules live in src/lib/ssrf.ts) ---------- */
 
-function isPrivateIPv4(ip: string) {
-  const [a, b] = ip.split(".").map(Number);
-  return (
-    a === 0 || a === 10 || a === 127 || (a === 100 && b >= 64 && b <= 127) ||
-    (a === 169 && b === 254) || (a === 172 && b >= 16 && b <= 31) ||
-    (a === 192 && b === 168) || (a === 192 && b === 0) || (a === 198 && (b === 18 || b === 19)) || a >= 224
-  );
-}
+/**
+ * HTTP client whose sockets resolve DNS through createSafeLookup(): the address that gets
+ * checked is the address that gets connected to, so DNS rebinding can't swap in a private IP.
+ * (IP-literal hosts skip DNS entirely; assertSafeUrl() checks those before each request.)
+ */
+const safeAgent = new Agent({
+  connect: { lookup: createSafeLookup(), timeout: TIMEOUT_MS },
+});
 
-function isPrivateIP(ip: string) {
-  if (isIP(ip) === 4) return isPrivateIPv4(ip);
-  const v = ip.toLowerCase();
-  if (v.startsWith("::ffff:")) return isPrivateIPv4(v.slice(7));
-  return v === "::" || v === "::1" || v.startsWith("fc") || v.startsWith("fd") || v.startsWith("fe80") || v.startsWith("ff");
-}
-
-async function assertPublicHost(hostname: string) {
-  const host = hostname.replace(/^\[|\]$/g, "");
-  if (host === "localhost" || host.endsWith(".localhost") || host.endsWith(".local") || host.endsWith(".internal"))
-    throw new Error("blocked host");
-  const addrs = isIP(host) ? [{ address: host }] : await lookup(host, { all: true });
-  if (addrs.length === 0 || addrs.some((a) => isPrivateIP(a.address))) throw new Error("blocked host");
-}
-
-async function safeFetch(start: string): Promise<{ res: Response; finalUrl: string }> {
+async function safeFetch(start: string): Promise<{ res: UndiciResponse; finalUrl: string }> {
   let url = start;
   for (let hop = 0; hop <= MAX_REDIRECTS; hop++) {
-    const u = new URL(url);
-    if (u.protocol !== "http:" && u.protocol !== "https:") throw new Error("bad protocol");
-    await assertPublicHost(u.hostname);
-    const res = await fetch(url, {
+    // Re-check every hop: a public page may redirect to an internal address.
+    assertSafeUrl(new URL(url));
+    const res = await undiciFetch(url, {
+      dispatcher: safeAgent,
       redirect: "manual",
       signal: AbortSignal.timeout(TIMEOUT_MS),
       headers: { "user-agent": UA, accept: "text/html,application/xhtml+xml;q=0.9,*/*;q=0.5", "accept-language": "en" },
     });
     const loc = res.headers.get("location");
     if (res.status >= 300 && res.status < 400 && loc) {
+      void res.body?.cancel();
       url = new URL(loc, url).toString();
       continue;
     }
@@ -58,7 +44,7 @@ async function safeFetch(start: string): Promise<{ res: Response; finalUrl: stri
   throw new Error("too many redirects");
 }
 
-async function readCapped(res: Response): Promise<string> {
+async function readCapped(res: UndiciResponse): Promise<string> {
   if (!res.body) return "";
   const reader = res.body.getReader();
   const chunks: Uint8Array[] = [];

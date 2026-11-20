@@ -1,8 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   cacheComponents: true,
+  // The link-preview route's SSRF-safe HTTP client must run as plain Node code, not bundled.
+  serverExternalPackages: ["undici"],
   partialPrefetching: true,
   turbopack: {
     rules: {
