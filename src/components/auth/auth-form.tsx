@@ -109,7 +109,7 @@ export function AuthForm() {
           initial={{ scale: 0, rotate: -20 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 14, delay: 0.1 }}
-          className="mx-auto mb-5 grid size-16 place-items-center rounded-3xl bg-lime/10 text-lime ring-1 ring-lime/25"
+          className="mx-auto mb-5 grid size-16 place-items-center rounded-2xl bg-white/[0.07] text-text ring-1 ring-white/12"
         >
           <MailCheck className="size-8" aria-hidden />
         </motion.div>

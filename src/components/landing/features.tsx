@@ -2,22 +2,14 @@
 
 import { motion, useInView } from "motion/react";
 import { Cloud, FileUp, Laptop, Search, Smartphone, Star, Tablet } from "lucide-react";
-import { useRef, useState, type PointerEvent, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { TypeBadge } from "@/components/ui/type-meta";
 import { Reveal } from "./reveal";
 
 function Tile({ className = "", children, delay = 0 }: { className?: string; children: ReactNode; delay?: number }) {
-  const onMove = (e: PointerEvent<HTMLDivElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
-    e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
-  };
   return (
     <Reveal delay={delay} className={className}>
-      <div
-        onPointerMove={onMove}
-        className="spotlight group flex h-full flex-col overflow-hidden rounded-[28px] border border-line bg-ink-900/60 p-6 transition-colors duration-300 hover:border-line-strong sm:p-7"
-      >
+      <div className="glass glass-hover group flex h-full flex-col overflow-hidden rounded-[20px] p-6 sm:p-7">
         {children}
       </div>
     </Reveal>
@@ -50,7 +42,7 @@ function PreviewVisual() {
             className="aspect-[4/3]"
             style={{
               background: `radial-gradient(120% 100% at 0% 0%, var(--type-${t}), transparent 65%), linear-gradient(135deg, #161a22, #0a0c10)`,
-              opacity: 0.85,
+              opacity: 0.35,
             }}
           />
           <div className="space-y-1.5 p-2.5">
@@ -81,7 +73,7 @@ function CollectionsVisual() {
           transition={{ delay: 0.15 + i * 0.1 }}
           className="flex items-center gap-3 rounded-xl border border-line bg-white/[0.03] px-3 py-2.5 text-sm"
         >
-          <span className="size-2.5 rounded-full" style={{ background: c.c, boxShadow: `0 0 12px ${c.c}` }} />
+          <span className="size-2.5 rounded-full" style={{ background: c.c }} />
           <span className="flex-1">{c.n}</span>
           <span className="text-xs text-subtle">{c.k}</span>
         </motion.div>
@@ -94,7 +86,7 @@ function CollectionsVisual() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5 + i * 0.07, type: "spring", stiffness: 400, damping: 18 }}
-            className="rounded-full bg-lime/12 px-2.5 py-1 text-xs text-lime"
+            className="rounded-full bg-white/10 px-2.5 py-1 text-xs text-muted"
           >
             {t}
           </motion.span>
@@ -112,8 +104,8 @@ function SearchVisual() {
   const q = "neur";
   return (
     <div ref={ref} className="relative z-[3]">
-      <div className="flex h-11 items-center gap-2.5 rounded-xl border border-lime/40 bg-white/[0.04] px-3 shadow-[0_0_0_4px_rgba(200,245,96,0.07)]">
-        <Search className="size-4 text-lime" aria-hidden />
+      <div className="flex h-11 items-center gap-2.5 rounded-xl border border-white/20 bg-white/[0.06] px-3">
+        <Search className="size-4 text-muted" aria-hidden />
         <span className="font-mono text-sm">
           {inView &&
             q.split("").map((ch, i) => (
@@ -132,7 +124,7 @@ function SearchVisual() {
               key={s}
               animate={inView ? { opacity: hit ? 1 : 0.22, x: hit ? 4 : 0 } : { opacity: 1 }}
               transition={{ delay: 1, duration: 0.4 }}
-              className={`rounded-lg px-3 py-1.5 text-sm ${hit ? "bg-lime/10 text-text" : "text-muted"}`}
+              className={`rounded-lg px-3 py-1.5 text-sm ${hit ? "bg-white/10 text-text" : "text-muted"}`}
             >
               {s}
             </motion.div>
@@ -161,15 +153,15 @@ function SyncVisual() {
           {i < devices.length - 1 && (
             <div className="relative mx-2 h-px flex-1 overflow-hidden bg-line">
               <motion.span
-                className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-lime to-transparent"
-                animate={{ x: ["-100%", "300%"] }}
-                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
+                className="absolute top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-white/50"
+                animate={{ left: ["0%", "100%"], opacity: [0, 1, 0] }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut", delay: i * 0.6 }}
               />
             </div>
           )}
         </div>
       ))}
-      <Cloud className="absolute left-1/2 top-0 size-5 -translate-x-1/2 -translate-y-1 text-lime/70" aria-hidden />
+      <Cloud className="absolute left-1/2 top-0 size-5 -translate-x-1/2 -translate-y-1 text-muted" aria-hidden />
     </div>
   );
 }
@@ -218,13 +210,13 @@ function ImportVisual() {
         {Array.from({ length: 3 }, (_, k) => (
           <motion.span
             key={k}
-            className="absolute -top-1 size-2 rounded-full bg-lime shadow-[0_0_10px_var(--lime)]"
+            className="absolute -top-1 size-2 rounded-full bg-white/50"
             animate={{ left: ["0%", "100%"], opacity: [0, 1, 0] }}
             transition={{ duration: 1.6, repeat: Infinity, delay: k * 0.5, ease: "easeInOut" }}
           />
         ))}
       </div>
-      <div className="grid size-14 place-items-center rounded-2xl bg-lime text-on-lime shadow-[0_8px_30px_-6px_rgba(200,245,96,0.6)]">
+      <div className="grid size-14 place-items-center rounded-2xl bg-lime text-on-lime">
         <span className="font-display text-lg font-bold">S</span>
       </div>
     </div>

@@ -50,7 +50,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 12, scale: 0.96, transition: { duration: 0.16 } }}
               role="status"
-              className="glass pointer-events-auto flex w-full max-w-md items-center gap-3 rounded-2xl bg-ink-850/80 py-2.5 pl-4 pr-2 text-sm shadow-2xl shadow-black/50"
+              className="glass-overlay pointer-events-auto flex w-full max-w-md items-center gap-3 rounded-2xl py-2.5 pl-4 pr-2 text-sm"
             >
               {t.tone === "error" ? (
                 <AlertCircle className="size-4.5 shrink-0 text-danger" aria-hidden />

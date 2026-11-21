@@ -20,7 +20,7 @@ const steps = [
 function SectionHeading({ eyebrow, title, body }: { eyebrow: string; title: React.ReactNode; body?: string }) {
   return (
     <Reveal className="mx-auto max-w-2xl text-center">
-      <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lime">{eyebrow}</p>
+      <p className="text-sm font-semibold uppercase tracking-[0.18em] text-muted">{eyebrow}</p>
       <h2 className="mt-4 text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em]">{title}</h2>
       {body && <p className="mt-4 text-lg text-muted">{body}</p>}
     </Reveal>
@@ -45,7 +45,7 @@ export default function Home() {
             eyebrow="How it works"
             title={
               <>
-                Paste it. <span className="text-gradient">Stash it.</span> Done.
+                Paste it. Stash it. Done.
               </>
             }
             body="No browser extension, no folders to set up first. Saving a link takes about two seconds."
@@ -57,8 +57,8 @@ export default function Home() {
             <ol className="space-y-4">
               {steps.map((s, i) => (
                 <Reveal key={s.title} delay={i * 0.1}>
-                  <li className="flex gap-4 rounded-3xl border border-line bg-white/[0.02] p-5 transition-colors hover:border-line-strong hover:bg-white/[0.035]">
-                    <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-lime/10 text-lime ring-1 ring-lime/20">
+                  <li className="glass glass-hover flex gap-4 rounded-[20px] p-5">
+                    <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-white/[0.07] text-text ring-1 ring-white/12">
                       <s.icon className="size-5" aria-hidden />
                     </span>
                     <div>
@@ -92,7 +92,7 @@ export default function Home() {
             title={
               <>
                 Phone, tablet, laptop. <br className="hidden sm:block" />
-                <span className="text-gradient">One stash.</span>
+                <span>One stash.</span>
               </>
             }
             body="Designed mobile-first with big touch targets, swipe-to-close sheets and a layout that adapts to any screen."
@@ -104,8 +104,8 @@ export default function Home() {
 
         <section className="px-5 pb-24 pt-8 sm:pb-32">
           <Reveal>
-            <div className="relative mx-auto max-w-5xl overflow-hidden rounded-[36px] border border-line-strong bg-ink-900/70 px-6 py-16 text-center sm:px-12 sm:py-24">
-              <Aurora intensity={1.4} />
+            <div className="glass relative mx-auto max-w-5xl overflow-hidden rounded-[20px] px-6 py-16 text-center sm:px-12 sm:py-24">
+              <Aurora />
               <div className="grid-bg absolute inset-0" aria-hidden />
               <div className="relative">
                 <h2 className="mx-auto max-w-3xl text-[clamp(2.25rem,6vw,4.5rem)] font-semibold leading-[1] tracking-[-0.035em]">

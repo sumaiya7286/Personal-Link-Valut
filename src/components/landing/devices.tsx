@@ -17,7 +17,7 @@ function MiniTile({ t, w }: { t: string; w: string }) {
     <div className="overflow-hidden rounded-lg border border-white/[0.06] bg-white/[0.03]">
       <div
         className="aspect-[16/9]"
-        style={{ background: `radial-gradient(120% 100% at 0% 0%, var(--type-${t}), transparent 65%), #10131a`, opacity: 0.9 }}
+        style={{ background: `radial-gradient(120% 100% at 0% 0%, var(--type-${t}), transparent 65%), #10131a`, opacity: 0.35 }}
       />
       <div className="space-y-1 p-1.5">
         <div className={`h-1.5 rounded bg-white/20 ${w}`} />
@@ -37,7 +37,7 @@ export function Devices() {
   return (
     <div ref={ref} className="relative mx-auto max-w-5xl pb-10" aria-hidden>
       <motion.div style={{ y: laptopY }} className="mx-auto w-[92%] sm:w-[82%]">
-        <div className="rounded-t-[20px] border border-line-strong bg-ink-850 p-2.5 shadow-[0_50px_120px_-30px_rgba(0,0,0,0.95)] sm:p-3">
+        <div className="glass rounded-b-none rounded-t-[20px] p-2.5 sm:p-3">
           <div className="flex overflow-hidden rounded-xl bg-ink-950">
             <div className="hidden w-1/5 space-y-2 border-r border-white/[0.06] p-3 sm:block">
               <div className="h-3 w-3/4 rounded bg-lime/70" />
@@ -60,9 +60,9 @@ export function Devices() {
 
       <motion.div
         style={{ y: phoneY }}
-        className="absolute -bottom-4 right-[2%] w-[30%] max-w-[180px] rounded-[28px] border border-line-strong bg-ink-850 p-1.5 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.95)] sm:right-[6%]"
+        className="glass-overlay absolute -bottom-4 right-[2%] w-[30%] max-w-[180px] rounded-[20px] p-1.5 sm:right-[6%]"
       >
-        <div className="overflow-hidden rounded-[22px] bg-ink-950 p-2">
+        <div className="overflow-hidden rounded-[14px] bg-ink-950 p-2">
           <div className="mx-auto mb-2 h-1.5 w-10 rounded-full bg-white/10" />
           <div className="mb-2 h-4 rounded-md border border-white/[0.06] bg-white/[0.03]" />
           <div className="space-y-2">

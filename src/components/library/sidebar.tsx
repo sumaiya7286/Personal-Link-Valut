@@ -60,10 +60,10 @@ function NavItem({
       {active && (
         <motion.span
           layoutId={`${layoutGroup}-nav-active`}
-          className="absolute inset-0 rounded-xl border border-line-strong bg-white/[0.07]"
+          className="absolute inset-0 rounded-xl border border-white/12 bg-white/[0.07]"
           transition={{ type: "spring", stiffness: 500, damping: 40 }}
         >
-          <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-lime shadow-[0_0_12px_var(--lime)]" />
+          <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-lime" />
         </motion.span>
       )}
       <span className="relative grid size-5 place-items-center">{icon}</span>
@@ -133,7 +133,7 @@ export function Sidebar({
           <button
             type="button"
             onClick={onNewCollection}
-            className="w-full rounded-xl border border-dashed border-line px-3 py-3 text-left text-sm text-subtle transition-colors hover:border-lime/40 hover:text-muted"
+            className="w-full rounded-xl border border-dashed border-line px-3 py-3 text-left text-sm text-subtle transition-colors hover:border-white/20 hover:text-muted"
           >
             Group links into collections like “Work” or “Tutorials”.
           </button>
@@ -149,7 +149,7 @@ export function Sidebar({
                   icon={
                     <span
                       className="size-2.5 rounded-full"
-                      style={{ background: c.color, boxShadow: `0 0 10px ${c.color}` }}
+                      style={{ background: c.color }}
                       aria-hidden
                     />
                   }

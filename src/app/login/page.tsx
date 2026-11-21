@@ -21,11 +21,11 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
             <h1 className="text-4xl font-semibold sm:text-5xl">
-              Welcome to <span className="text-gradient">Stash</span>
+              Welcome to Stash
             </h1>
             <p className="mt-3 text-muted">Your links, synced on every device.</p>
           </div>
-          <div className="glass rounded-[28px] bg-ink-900/60 p-6 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)] sm:p-8">
+          <div className="glass rounded-[20px] p-6 sm:p-8">
             <AuthForm />
           </div>
         </div>

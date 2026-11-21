@@ -82,7 +82,7 @@ function FloatingCard({
         transition={{ type: "spring", stiffness: 90, damping: 16, delay: card.delay }}
       >
         <div className="animate-float" style={{ animationDelay: `${card.delay * -4}s` }}>
-          <div className="group overflow-hidden rounded-3xl border border-line-strong bg-ink-900/90 shadow-[0_40px_80px_-24px_rgba(0,0,0,0.95)] backdrop-blur-xl">
+          <div className="glass-overlay group overflow-hidden rounded-[20px]">
             <div className="relative">
               <Cover link={card} className="aspect-[16/9] w-full" />
               <div className="absolute left-3 top-3">
@@ -93,7 +93,7 @@ function FloatingCard({
               <p className="line-clamp-1 font-display font-semibold">{card.title}</p>
               {card.notes && (
                 <p className="flex items-center gap-2 text-xs text-muted">
-                  <NotebookPen className="size-3.5 text-lime" aria-hidden /> {card.notes}
+                  <NotebookPen className="size-3.5 text-muted" aria-hidden /> {card.notes}
                 </p>
               )}
               <div className="flex items-center gap-1.5">
@@ -103,7 +103,7 @@ function FloatingCard({
                   </span>
                 ))}
                 <span className="ml-auto flex items-center gap-1 text-subtle">
-                  {card.is_done && <Check className="size-4 text-lime" aria-hidden strokeWidth={3} />}
+                  {card.is_done && <Check className="size-4 text-text" aria-hidden strokeWidth={3} />}
                   {card.is_favorite && <Star className="size-4 fill-[#FFD166] text-[#FFD166]" aria-hidden />}
                 </span>
               </div>
@@ -139,9 +139,9 @@ export function Hero({ ctaHref }: { ctaHref: string }) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="group inline-flex items-center gap-2 rounded-full border border-line bg-white/[0.03] py-1.5 pl-1.5 pr-3.5 text-sm text-muted backdrop-blur-md transition-colors hover:border-lime/30 hover:text-text"
+          className="glass group inline-flex items-center gap-2 rounded-full py-1.5 pl-1.5 pr-3.5 text-sm text-muted transition-colors hover:border-white/20 hover:text-text"
         >
-          <span className="rounded-full bg-lime px-2 py-0.5 text-xs font-semibold text-on-lime">New</span>
+          <span className="rounded-full bg-white/12 px-2 py-0.5 text-xs font-semibold text-text">New</span>
           <span className="sm:hidden">Instant link previews</span>
           <span className="hidden sm:inline">Paste a link — previews appear instantly</span>
           <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
@@ -164,7 +164,7 @@ export function Hero({ ctaHref }: { ctaHref: string }) {
           </span>
           <motion.span
             aria-hidden
-            className="text-gradient block pb-2"
+            className="block pb-2"
             initial={{ opacity: 0, y: "0.4em", filter: "blur(12px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
@@ -200,7 +200,6 @@ export function Hero({ ctaHref }: { ctaHref: string }) {
       </div>
 
       <div aria-hidden className="relative mx-auto mt-16 h-[22rem] max-w-5xl sm:mt-20 sm:h-[26rem]">
-        <div className="absolute inset-x-[15%] top-[30%] h-40 rounded-full bg-lime/20 blur-[90px]" />
         {demoCards.map((c) => (
           <FloatingCard key={c.id} card={c} mx={mx} my={my} />
         ))}

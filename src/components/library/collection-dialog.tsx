@@ -91,7 +91,7 @@ function CollectionForm({
               />
               <span
                 className="size-8 rounded-full ring-offset-2 ring-offset-ink-900 transition-transform peer-checked:scale-110 peer-checked:ring-2 peer-focus-visible:ring-2 peer-focus-visible:ring-white"
-                style={{ background: c, boxShadow: `0 0 18px -2px ${c}`, ["--tw-ring-color" as string]: c }}
+                style={{ background: c, ["--tw-ring-color" as string]: c }}
               />
               {color === c && <Check className="pointer-events-none absolute size-4 text-black" aria-hidden strokeWidth={3} />}
             </label>

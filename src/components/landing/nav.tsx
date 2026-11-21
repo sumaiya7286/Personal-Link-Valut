@@ -26,7 +26,7 @@ export function Nav({ ctaHref, signInHref }: { ctaHref: string; signInHref: stri
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 200, damping: 26, delay: 0.1 }}
         className={`mx-3 mt-3 flex max-w-6xl items-center gap-4 rounded-2xl border px-3 py-2 transition-[background-color,border-color,box-shadow] duration-300 sm:mx-4 sm:px-4 xl:mx-auto ${
-          scrolled ? "glass bg-ink-950/70 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.8)]" : "border-transparent"
+          scrolled ? "glass-overlay" : "border-transparent"
         }`}
       >
         <Logo />
@@ -67,7 +67,7 @@ export function Nav({ ctaHref, signInHref }: { ctaHref: string; signInHref: stri
             initial={{ opacity: 0, y: -10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, transition: { duration: 0.15 } }}
-            className="glass mx-3 mt-2 rounded-2xl bg-ink-900/95 p-2 md:hidden"
+            className="glass-overlay mx-3 mt-2 rounded-2xl p-2 md:hidden"
           >
             {links.map((l, i) => (
               <motion.a

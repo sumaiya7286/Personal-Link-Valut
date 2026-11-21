@@ -192,7 +192,7 @@ function LinkForm({
             className={`${field} h-13 pl-11 pr-11 font-mono text-sm`}
           />
           {loading && (
-            <Loader2 className="absolute right-4 top-1/2 size-[18px] -translate-y-1/2 animate-spin text-lime" aria-label="Fetching preview" />
+            <Loader2 className="absolute right-4 top-1/2 size-[18px] -translate-y-1/2 animate-spin text-muted" aria-label="Fetching preview" />
           )}
         </div>
         {error && (

@@ -1,19 +1,23 @@
-/** Slow-drifting glow blobs behind content. Pure CSS, GPU-friendly (transform only). */
-export function Aurora({ className = "", intensity = 1 }: { className?: string; intensity?: number }) {
+/**
+ * Calm, static backdrop: a few large, soft, low-saturation slate shapes.
+ * No animation. It exists so frosted-glass panels have something gentle to blur.
+ */
+const SHAPES = [
+  { pos: "-left-[15%] -top-[20%] h-[60vmax] w-[60vmax]", color: "100, 116, 139", opacity: 0.13 }, // slate
+  { pos: "-right-[18%] top-[8%] h-[52vmax] w-[52vmax]", color: "88, 104, 128", opacity: 0.11 }, // blue-grey
+  { pos: "bottom-[-30%] left-[20%] h-[48vmax] w-[48vmax]", color: "110, 120, 138", opacity: 0.09 }, // grey
+];
+
+export function Aurora({ className = "" }: { className?: string }) {
   return (
     <div aria-hidden className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}>
-      <div
-        className="absolute -left-[10%] -top-[20%] h-[60vmax] w-[60vmax] animate-aurora rounded-full blur-[110px]"
-        style={{ background: "radial-gradient(circle, rgba(200,245,96,0.55), transparent 62%)", opacity: 0.28 * intensity }}
-      />
-      <div
-        className="absolute -right-[15%] top-[5%] h-[55vmax] w-[55vmax] animate-aurora rounded-full blur-[120px] [animation-delay:-6s]"
-        style={{ background: "radial-gradient(circle, rgba(45,212,191,0.55), transparent 62%)", opacity: 0.22 * intensity }}
-      />
-      <div
-        className="absolute bottom-[-30%] left-[25%] h-[50vmax] w-[50vmax] animate-aurora rounded-full blur-[130px] [animation-delay:-12s]"
-        style={{ background: "radial-gradient(circle, rgba(139,124,255,0.6), transparent 62%)", opacity: 0.2 * intensity }}
-      />
+      {SHAPES.map((s) => (
+        <div
+          key={s.pos}
+          className={`absolute rounded-full blur-[120px] ${s.pos}`}
+          style={{ background: `radial-gradient(circle, rgb(${s.color}), transparent 65%)`, opacity: s.opacity }}
+        />
+      ))}
     </div>
   );
 }

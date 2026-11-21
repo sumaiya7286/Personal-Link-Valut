@@ -145,12 +145,12 @@ export function Menu({ trigger, items, align = "end", side = "bottom", header }:
                 exit={{ opacity: 0, scale: 0.97, transition: { duration: 0.12 } }}
                 transition={{ type: "spring", stiffness: 520, damping: 34 }}
                 style={{ ...pos.style, transformOrigin: `${pos.up ? "bottom" : "top"} ${align === "end" ? "right" : "left"}` }}
-                className="glass thin-scroll fixed z-[65] w-max min-w-52 max-w-[calc(100vw-16px)] overflow-y-auto rounded-2xl bg-ink-850/95 p-1.5 shadow-2xl shadow-black/60"
+                className="glass-overlay thin-scroll fixed z-[65] w-max min-w-52 max-w-[calc(100vw-16px)] overflow-y-auto rounded-2xl p-1.5"
               >
                 {header}
                 {items.map((item, i) =>
                   item === "separator" ? (
-                    <div key={`sep-${i}`} role="separator" className="my-1 h-px bg-line" />
+                    <div key={`sep-${i}`} role="separator" className="my-1 h-px bg-white/10" />
                   ) : (
                     <button
                       key={item.label}

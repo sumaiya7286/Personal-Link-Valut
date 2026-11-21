@@ -66,17 +66,16 @@ export function PasteDemo() {
   const shownPhase: Phase = reduce ? "saved" : phase;
 
   return (
-    <div ref={ref} className="glass relative mx-auto w-full max-w-xl overflow-hidden rounded-[28px] bg-ink-900/70 p-4 sm:p-6">
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-lime/60 to-transparent" />
+    <div ref={ref} className="glass relative mx-auto w-full max-w-xl overflow-hidden rounded-[20px] p-4 sm:p-6">
       <div className="flex h-13 items-center gap-3 rounded-2xl border border-line bg-white/[0.03] px-4">
         <Link2 className="size-[18px] shrink-0 text-subtle" aria-hidden />
         <span className="min-w-0 flex-1 truncate font-mono text-sm text-text">
           https://{demo.url.slice(0, shownChars)}
-          {shownPhase === "typing" && <span className="ml-px inline-block h-4 w-[2px] translate-y-0.5 animate-pulse bg-lime" />}
+          {shownPhase === "typing" && <span className="ml-px inline-block h-4 w-[2px] translate-y-0.5 animate-pulse bg-white/70" />}
         </span>
-        {shownPhase === "fetching" && <Loader2 className="size-[18px] animate-spin text-lime" aria-hidden />}
+        {shownPhase === "fetching" && <Loader2 className="size-[18px] animate-spin text-muted" aria-hidden />}
         {shownPhase === "saved" && (
-          <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} className="text-lime">
+          <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} className="text-muted">
             <Sparkles className="size-[18px]" aria-hidden />
           </motion.span>
         )}
@@ -112,7 +111,7 @@ export function PasteDemo() {
               <div
                 className="relative h-full w-32 shrink-0 overflow-hidden rounded-xl sm:w-40"
                 style={{
-                  background: `radial-gradient(120% 100% at 0% 0%, hsl(${demo.hue} 75% 45%), transparent 60%), linear-gradient(135deg, hsl(${demo.hue} 40% 18%), #0a0c10)`,
+                  background: `radial-gradient(120% 100% at 0% 0%, hsl(${demo.hue} 20% 30%), transparent 60%), linear-gradient(135deg, hsl(${demo.hue} 12% 16%), #0a0c10)`,
                 }}
               >
                 <div className="grid-bg absolute inset-0" />
@@ -128,7 +127,7 @@ export function PasteDemo() {
                       initial={{ opacity: 0, scale: 0.6 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.25 + k * 0.1, type: "spring", stiffness: 500, damping: 20 }}
-                      className="rounded-full bg-lime/15 px-2 py-0.5 text-[11px] text-lime"
+                      className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] text-text"
                     >
                       #{t}
                     </motion.span>

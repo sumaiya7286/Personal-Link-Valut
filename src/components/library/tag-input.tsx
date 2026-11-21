@@ -48,14 +48,14 @@ export function TagInput({
               initial={{ opacity: 0, scale: 0.7 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.7, transition: { duration: 0.12 } }}
-              className="inline-flex items-center gap-1 rounded-full bg-lime/15 py-1 pl-2.5 pr-1 text-sm text-lime"
+              className="inline-flex items-center gap-1 rounded-full bg-white/10 py-1 pl-2.5 pr-1 text-sm text-text"
             >
               #{t}
               <button
                 type="button"
                 onClick={() => onChange(value.filter((x) => x !== t))}
                 aria-label={`Remove tag ${t}`}
-                className="grid size-6 place-items-center rounded-full hover:bg-lime/20"
+                className="grid size-6 place-items-center rounded-full hover:bg-white/15"
               >
                 <X className="size-3.5" aria-hidden />
               </button>
@@ -96,7 +96,7 @@ export function TagInput({
               key={s}
               type="button"
               onClick={() => add(s)}
-              className="min-h-8 rounded-full border border-line px-2.5 text-xs text-muted transition-colors hover:border-lime/40 hover:text-lime"
+              className="min-h-8 rounded-full border border-line px-2.5 text-xs text-muted transition-colors hover:border-white/25 hover:text-text"
             >
               + #{s}
             </button>

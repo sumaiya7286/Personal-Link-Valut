@@ -273,10 +273,10 @@ export function Library({ store, email, onSignOut }: Props) {
 
   return (
     <div className="relative min-h-dvh overflow-x-clip">
-      <Aurora intensity={0.55} className="fixed" />
+      <Aurora className="fixed" />
 
       {/* ---------- Desktop sidebar ---------- */}
-      <aside className="thin-scroll fixed inset-y-0 left-0 z-20 hidden w-72 flex-col gap-6 overflow-y-auto border-r border-line bg-ink-950/60 px-4 py-5 backdrop-blur-xl lg:flex">
+      <aside className="glass thin-scroll fixed inset-y-0 left-0 z-20 hidden w-72 flex-col gap-6 overflow-y-auto rounded-none border-y-0 border-l-0 px-4 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] lg:flex">
         <div className="flex items-center justify-between px-2">
           <Logo href="/app" />
         </div>
@@ -320,7 +320,7 @@ export function Library({ store, email, onSignOut }: Props) {
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={{ left: 0.5, right: 0 }}
               onDragEnd={(_, i) => (i.offset.x < -80 || i.velocity.x < -500) && setDrawer(false)}
-              className="thin-scroll pb-safe absolute inset-y-0 left-0 flex w-[min(20rem,86vw)] flex-col gap-6 overflow-y-auto border-r border-line bg-ink-900/95 px-4 pt-[max(1.25rem,env(safe-area-inset-top))] backdrop-blur-xl"
+              className="glass-overlay thin-scroll pb-safe absolute inset-y-0 left-0 flex w-[min(20rem,86vw)] flex-col gap-6 overflow-y-auto rounded-none border-y-0 border-l-0 px-4 pt-[max(1.25rem,env(safe-area-inset-top))]"
             >
               <div className="flex items-center justify-between px-2">
                 <Logo href="/app" />
@@ -342,7 +342,7 @@ export function Library({ store, email, onSignOut }: Props) {
 
       {/* ---------- Main ---------- */}
       <div className="relative lg:pl-72">
-        <header className="sticky top-0 z-30 border-b border-line bg-ink-950/70 pt-[env(safe-area-inset-top)] backdrop-blur-xl">
+        <header className="glass-overlay sticky top-0 z-30 rounded-none border-x-0 border-t-0 pt-[env(safe-area-inset-top)] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
           <div className="mx-auto flex max-w-[1600px] items-center gap-2 px-4 py-3 sm:gap-3 sm:px-6 lg:px-8">
             <button
               type="button"
@@ -462,7 +462,7 @@ export function Library({ store, email, onSignOut }: Props) {
                     {active && (
                       <motion.span
                         layoutId="chip-active"
-                        className="absolute inset-0 rounded-full bg-lime shadow-[0_6px_24px_-6px_rgba(200,245,96,0.6)]"
+                        className="absolute inset-0 rounded-full bg-lime"
                         transition={{ type: "spring", stiffness: 500, damping: 38 }}
                       />
                     )}
@@ -561,7 +561,7 @@ export function Library({ store, email, onSignOut }: Props) {
         animate={{ scale: 1, rotate: 0 }}
         whileTap={{ scale: 0.9 }}
         transition={{ type: "spring", stiffness: 400, damping: 20, delay: 0.3 }}
-        className="bottom-safe fixed right-5 z-30 grid size-16 place-items-center rounded-[22px] bg-lime text-on-lime shadow-[0_12px_40px_-8px_rgba(200,245,96,0.7)] sm:hidden"
+        className="bottom-safe fixed right-5 z-30 grid size-16 place-items-center rounded-[20px] bg-lime text-on-lime shadow-[0_10px_28px_-10px_rgba(0,0,0,0.7)] sm:hidden"
       >
         <Plus className="size-7" aria-hidden strokeWidth={2.5} />
       </motion.button>
@@ -663,7 +663,7 @@ function SearchBox({
 
   return (
     <div className="group relative">
-      <Search className="pointer-events-none absolute left-3.5 top-1/2 size-[18px] -translate-y-1/2 text-subtle transition-colors group-focus-within:text-lime" aria-hidden />
+      <Search className="pointer-events-none absolute left-3.5 top-1/2 size-[18px] -translate-y-1/2 text-subtle transition-colors group-focus-within:text-text" aria-hidden />
       <input
         ref={localRef}
         type="search"
@@ -678,7 +678,7 @@ function SearchBox({
         placeholder="Search titles, notes, tags, sites…"
         aria-label="Search your links"
         enterKeyHint="search"
-        className="h-11 w-full rounded-2xl border border-line bg-white/[0.04] pl-11 pr-16 text-[15px] text-text outline-none transition-[border-color,background-color,box-shadow] placeholder:text-subtle hover:border-line-strong focus:border-lime/50 focus:bg-white/[0.06] focus:shadow-[0_0_0_4px_rgba(200,245,96,0.08)] [&::-webkit-search-cancel-button]:hidden"
+        className="glass h-11 w-full rounded-2xl pl-11 pr-16 text-[15px] text-text outline-none transition-[border-color,background-color] placeholder:text-subtle hover:border-white/20 focus:border-lime/60 focus:bg-white/[0.09] [&::-webkit-search-cancel-button]:hidden"
       />
       {value ? (
         <button
@@ -702,8 +702,8 @@ function SearchBox({
 
 function DemoNote() {
   return (
-    <div className="rounded-2xl border border-lime/20 bg-lime/[0.06] p-3.5 text-[13px] leading-relaxed text-muted">
-      <p className="font-medium text-lime">Demo mode</p>
+    <div className="glass rounded-2xl p-3.5 text-[13px] leading-relaxed text-muted">
+      <p className="font-medium text-text">Demo mode</p>
       Links are saved in this browser. Add your Supabase keys to turn on accounts and sync across devices.
     </div>
   );
@@ -726,14 +726,14 @@ function EmptyState({
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`relative mx-auto flex max-w-lg flex-col items-center overflow-hidden rounded-[32px] border border-line bg-white/[0.02] px-6 text-center ${
+      className={`glass relative mx-auto flex max-w-lg flex-col items-center overflow-hidden rounded-[20px] px-6 text-center ${
         big ? "py-16 sm:py-20" : "py-12"
       }`}
     >
       <motion.div
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="mb-5 grid size-16 place-items-center rounded-3xl bg-lime/10 text-lime ring-1 ring-lime/25 shadow-[0_0_40px_-8px_rgba(200,245,96,0.5)]"
+        className="mb-5 grid size-16 place-items-center rounded-2xl bg-white/[0.07] text-text ring-1 ring-white/12"
       >
         {icon}
       </motion.div>
@@ -748,7 +748,7 @@ function SkeletonGrid() {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] sm:gap-5" aria-label="Loading links" role="status">
       {Array.from({ length: 8 }, (_, i) => (
-        <div key={i} className="overflow-hidden rounded-3xl border border-line bg-ink-900/60">
+        <div key={i} className="glass overflow-hidden rounded-[20px]">
           <div className="skeleton aspect-[16/9]" />
           <div className="space-y-3 p-4">
             <div className="skeleton h-4 w-4/5 rounded" />

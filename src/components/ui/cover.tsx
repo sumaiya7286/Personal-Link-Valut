@@ -78,14 +78,14 @@ export function Cover({ link, className = "" }: { link: LinkItem; className?: st
       aria-hidden
       className={`relative overflow-hidden ${className}`}
       style={{
-        background: `radial-gradient(120% 90% at 0% 0%, hsl(${hue} 70% 22%) 0%, transparent 55%),
-          radial-gradient(90% 80% at 100% 100%, color-mix(in oklab, ${meta.color} 35%, transparent) 0%, transparent 60%),
-          linear-gradient(135deg, #10131a, #0a0c10)`,
+        background: `radial-gradient(120% 90% at 0% 0%, hsl(${hue} 18% 20%) 0%, transparent 60%),
+          radial-gradient(90% 80% at 100% 100%, color-mix(in oklab, ${meta.color} 14%, transparent) 0%, transparent 60%),
+          linear-gradient(135deg, #12151b, #0b0d11)`,
       }}
     >
       <div className="grid-bg absolute inset-0 opacity-60" />
       <Icon
-        className="absolute -bottom-6 -right-4 size-32 opacity-[0.13] transition-transform duration-700 ease-[var(--ease-out)] group-hover:-rotate-6 group-hover:scale-110"
+        className="absolute -bottom-6 -right-4 size-32 opacity-[0.09] transition-transform duration-700 ease-[var(--ease-out)] group-hover:-rotate-6 group-hover:scale-110"
         style={{ color: meta.color }}
         strokeWidth={1.25}
       />

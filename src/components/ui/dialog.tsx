@@ -100,7 +100,7 @@ export function Dialog({ open, onClose, title, description, children, footer, si
             aria-modal="true"
             aria-labelledby={titleId}
             aria-describedby={description ? descId : undefined}
-            className={`glass relative flex max-h-[92dvh] w-full flex-col overflow-hidden rounded-t-[28px] bg-ink-900/90 shadow-[0_30px_120px_-20px_rgba(0,0,0,0.9)] sm:rounded-[28px] ${width}`}
+            className={`glass-overlay relative flex max-h-[92dvh] w-full flex-col overflow-hidden rounded-b-none rounded-t-[20px] sm:rounded-[20px] ${width}`}
             initial={isMobile ? { y: "100%" } : { opacity: 0, scale: 0.94, y: 16 }}
             animate={isMobile ? { y: 0 } : { opacity: 1, scale: 1, y: 0 }}
             exit={
@@ -116,7 +116,6 @@ export function Dialog({ open, onClose, title, description, children, footer, si
             dragElastic={{ top: 0, bottom: 0.6 }}
             onDragEnd={onDragEnd}
           >
-            <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-lime/50 to-transparent" />
             {isMobile && (
               <div
                 className="flex touch-none justify-center pb-1 pt-3"
@@ -151,7 +150,7 @@ export function Dialog({ open, onClose, title, description, children, footer, si
             </header>
             <div className="thin-scroll flex-1 overflow-y-auto overscroll-contain px-5 pb-5 pt-2 sm:px-7">{children}</div>
             {footer && (
-              <footer className="pb-safe flex items-center justify-end gap-2 border-t border-line bg-ink-950/40 px-5 pt-4 sm:px-7 sm:pb-5">
+              <footer className="pb-safe flex items-center justify-end gap-2 border-t border-white/10 px-5 pt-4 sm:px-7 sm:pb-5">
                 {footer}
               </footer>
             )}

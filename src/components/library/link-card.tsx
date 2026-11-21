@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { Check, Copy, FolderInput, MoreHorizontal, NotebookPen, Pencil, Star, Trash2 } from "lucide-react";
-import { memo, useCallback, type PointerEvent } from "react";
+import { memo } from "react";
 import { Cover, Favicon } from "@/components/ui/cover";
 import { Menu, type MenuItem } from "@/components/ui/menu";
 import { TypeBadge } from "@/components/ui/type-meta";
@@ -108,15 +108,6 @@ function MoreMenu({ link, collections, actions }: { link: LinkItem; collections:
   );
 }
 
-function useSpotlight() {
-  return useCallback((e: PointerEvent<HTMLElement>) => {
-    if (e.pointerType !== "mouse") return;
-    const r = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
-    e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
-  }, []);
-}
-
 interface CardProps {
   link: LinkItem;
   collection?: Collection;
@@ -126,7 +117,6 @@ interface CardProps {
 }
 
 export const LinkCard = memo(function LinkCard({ link, collection, collections, actions, index }: CardProps) {
-  const onMove = useSpotlight();
   const domain = getDomain(link.url);
 
   return (
@@ -138,8 +128,7 @@ export const LinkCard = memo(function LinkCard({ link, collection, collections, 
       whileTap={{ scale: 0.985 }}
       exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.18 } }}
       transition={{ type: "spring", stiffness: 340, damping: 30, delay: Math.min(index, 12) * 0.035 }}
-      onPointerMove={onMove}
-      className="spotlight group flex flex-col overflow-hidden rounded-3xl border border-line bg-ink-900/70 transition-[border-color,box-shadow,transform] duration-300 ease-[var(--ease-out)] hover:border-line-strong hover:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.9)]"
+      className="glass glass-hover group relative flex flex-col overflow-hidden rounded-[20px]"
     >
       <div className="relative">
         <Cover link={link} className={`aspect-[16/9] w-full ${link.is_done ? "opacity-50 grayscale-[60%]" : ""}`} />
@@ -158,7 +147,7 @@ export const LinkCard = memo(function LinkCard({ link, collection, collections, 
           href={link.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-lg outline-none after:absolute after:inset-0 after:z-0 after:rounded-3xl after:content-[''] focus-visible:after:ring-2 focus-visible:after:ring-lime"
+          className="rounded-lg outline-none after:absolute after:inset-0 after:z-0 after:rounded-[20px] after:content-[''] focus-visible:after:ring-2 focus-visible:after:ring-lime"
         >
           <h3 className="line-clamp-2 font-display text-[17px] font-semibold leading-snug text-text">
             {link.title || domain}
@@ -171,7 +160,7 @@ export const LinkCard = memo(function LinkCard({ link, collection, collections, 
         {link.description && <p className="line-clamp-2 text-sm text-subtle">{link.description}</p>}
         {link.notes && (
           <p className="flex gap-2 rounded-xl border border-line bg-white/[0.025] px-3 py-2 text-[13px] text-muted">
-            <NotebookPen className="mt-0.5 size-3.5 shrink-0 text-lime" aria-hidden />
+            <NotebookPen className="mt-0.5 size-3.5 shrink-0 text-muted" aria-hidden />
             <span className="line-clamp-2">{link.notes}</span>
           </p>
         )}
@@ -190,7 +179,7 @@ export const LinkCard = memo(function LinkCard({ link, collection, collections, 
                 key={t}
                 type="button"
                 onClick={() => actions.onTagClick(t)}
-                className="rounded-full bg-white/[0.05] px-2.5 py-1 text-xs text-muted transition-colors hover:bg-lime/15 hover:text-lime"
+                className="rounded-full bg-white/[0.05] px-2.5 py-1 text-xs text-muted transition-colors hover:bg-white/10 hover:text-text"
               >
                 #{t}
               </button>
@@ -208,7 +197,7 @@ export const LinkCard = memo(function LinkCard({ link, collection, collections, 
             aria-pressed={link.is_done}
             aria-label={link.is_done ? `Mark as not ${doneLabel(link).toLowerCase()}` : `Mark as ${doneLabel(link).toLowerCase()}`}
             className={`grid size-10 place-items-center rounded-xl transition-colors hover:bg-white/[0.07] ${
-              link.is_done ? "text-lime" : "text-muted hover:text-text"
+              link.is_done ? "text-text" : "text-muted hover:text-text"
             }`}
           >
             <Check className="size-[18px]" aria-hidden strokeWidth={link.is_done ? 3 : 2} />
@@ -230,7 +219,7 @@ export const LinkRow = memo(function LinkRow({ link, collection, collections, ac
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 12, transition: { duration: 0.15 } }}
       transition={{ type: "spring", stiffness: 380, damping: 32, delay: Math.min(index, 16) * 0.02 }}
-      className="group relative flex items-center gap-3 rounded-2xl border border-transparent px-2 py-2 transition-colors hover:border-line hover:bg-white/[0.03] sm:gap-4 sm:px-3"
+      className="group relative flex items-center gap-3 rounded-2xl border border-transparent px-2 py-2 transition-colors hover:border-white/12 hover:bg-white/[0.05] sm:gap-4 sm:px-3"
     >
       <Cover link={link} className={`aspect-[16/10] w-20 shrink-0 rounded-xl sm:w-28 ${link.is_done ? "opacity-50" : ""}`} />
       <div className="min-w-0 flex-1">

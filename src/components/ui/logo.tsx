@@ -1,14 +1,14 @@
 import Link from "next/link";
 
 /**
- * The gradient lives in CSS (not an SVG <linearGradient>), so the mark renders even when
+ * The fill lives in CSS (not an SVG <linearGradient>), so the mark renders even when
  * another copy of the logo sits inside a display:none container (duplicate SVG ids break that).
  */
 export function LogoMark({ className = "size-8" }: { className?: string }) {
   return (
     <span
       aria-hidden
-      className={`relative inline-grid shrink-0 place-items-center rounded-[28%] bg-[linear-gradient(135deg,#E4FF9A_0%,#C8F560_55%,#2DD4BF_100%)] ${className}`}
+      className={`relative inline-grid shrink-0 place-items-center rounded-[28%] bg-lime ${className}`}
     >
       <svg viewBox="0 0 32 32" className="size-full">
         {/* Three stacked cards, the top one tilted: links being stashed */}
